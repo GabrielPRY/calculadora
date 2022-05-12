@@ -1,44 +1,77 @@
+import { useState } from "react";
 import "./App.css";
 import Boton from "./componentes/Boton";
 import Clear from "./componentes/Clear";
 import Pantalla from "./componentes/Pantalla";
-import logo from "./imagenes/logo.png";
+
+import { evaluate, i } from "mathjs";
+import Logo from "./componentes/Logo";
 
 function App() {
+  ///hook para input
+  const [input, setInput] = useState("");
+
+  //asigna el valor al input
+  const agregarInput = (value) => {
+    setInput(input + value);
+  };
+
+  ///funcion del =
+  const calcularResultado = () => {
+    if (input.includes(".")) {
+      try {
+        setInput(evaluate(input).toFixed(2));
+      } catch (error) {
+        alert("Expresion invalida");
+      }
+    } else if (input === "") {
+      alert("Ingrese Valores");
+    } else {
+      try {
+        if (Number.isInteger(evaluate(input))) {
+          console.log("Resultado entero");
+          setInput(evaluate(input));
+        } else {
+          console.log("resultado no entero");
+          setInput(evaluate(input).toFixed(2));
+        }
+      } catch (error) {
+        alert("Expresion invalida");
+      }
+    }
+  };
+
   return (
     <div className="App">
-      <div className="contenedor-logo">
-        <img className="logo" src={logo} alt="logo" />
-      </div>
-
+      <Logo></Logo>
       <div className="contenedor-principal">
-        <Pantalla></Pantalla>
+        <Pantalla input={input}></Pantalla>
         <div className="fila">
-          <Boton>1</Boton>
-          <Boton>2</Boton>
-          <Boton>3</Boton>
-          <Boton>+</Boton>
+          <Boton manejarClic={agregarInput}>1</Boton>
+          <Boton manejarClic={agregarInput}>2</Boton>
+          <Boton manejarClic={agregarInput}>3</Boton>
+          <Boton manejarClic={agregarInput}>+</Boton>
         </div>
         <div className="fila">
-          <Boton>4</Boton>
-          <Boton>5</Boton>
-          <Boton>6</Boton>
-          <Boton>-</Boton>
+          <Boton manejarClic={agregarInput}>4</Boton>
+          <Boton manejarClic={agregarInput}>5</Boton>
+          <Boton manejarClic={agregarInput}>6</Boton>
+          <Boton manejarClic={agregarInput}>-</Boton>
         </div>
         <div className="fila">
-          <Boton>7</Boton>
-          <Boton>8</Boton>
-          <Boton>9</Boton>
-          <Boton>*</Boton>
+          <Boton manejarClic={agregarInput}>7</Boton>
+          <Boton manejarClic={agregarInput}>8</Boton>
+          <Boton manejarClic={agregarInput}>9</Boton>
+          <Boton manejarClic={agregarInput}>*</Boton>
         </div>
         <div className="fila">
-          <Boton>=</Boton>
-          <Boton>0</Boton>
-          <Boton>.</Boton>
-          <Boton>/</Boton>
+          <Boton manejarClic={calcularResultado}>=</Boton>
+          <Boton manejarClic={agregarInput}>0</Boton>
+          <Boton manejarClic={agregarInput}>.</Boton>
+          <Boton manejarClic={agregarInput}>/</Boton>
         </div>
         <div className="fila">
-          <Clear>Clear</Clear>
+          <Clear manejarClear={() => setInput("")}>Clear</Clear>
         </div>
       </div>
     </div>
@@ -47,4 +80,6 @@ function App() {
 
 export default App;
 
-/////04:51:00
+///// crear un component para el logo xDDDDDDDD
+//// detectar casos no manejados en la app papi
+/// 05:26:44

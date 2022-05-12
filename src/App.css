@@ -9,19 +9,6 @@
   align-items: center;
 }
 
-.contenedor-logo {
-  width: 100%;
-  height: 50px;
-  margin: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.logo {
-  height: 110px;
-}
-
 .contenedor-principal {
   width: 400px;
   height: 600px;
